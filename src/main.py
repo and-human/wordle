@@ -14,7 +14,8 @@ def main():
     pg.display.flip()
 
     # Main Game
-    words_list = ['']
+    words_list = open(WORDS_LIST).read()
+    words_list = words_list.split('\n')
     game = Game(screen, WORD_LENGTH, words_list)
 
     # Game Loop
