@@ -20,6 +20,8 @@ def main():
 
     # Game Loop
     running = True
+    pg.event.clear()
+
     while running:
         for event in pg.event.get():
 
