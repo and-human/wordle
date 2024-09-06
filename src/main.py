@@ -1,9 +1,7 @@
 import pygame as pg
 import os
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
+from .constants import *
+from .game import Game
 
 
 def main():
@@ -12,9 +10,12 @@ def main():
     # Screen
     screen = pg.display.set_mode((int(os.getenv('WIDTH')), int(os.getenv('HEIGHT'))))
     pg.display.set_caption(os.getenv('TITLE'))
-
     screen.fill(tuple(map(int, os.getenv('BG_COLOR').split(','))))
     pg.display.flip()
+
+    # Main Game
+    words_list = ['']
+    game = Game(screen, WORD_LENGTH, words_list)
 
     # Game Loop
     running = True
