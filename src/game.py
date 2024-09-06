@@ -15,7 +15,7 @@ class Game:
         self.game_state = PlayState()
 
         self.game_matrix = []
-        self.target_word = word_list[random.randint(0, len(word_list) - 1)].upper()
+        self.target_word = (word_list[random.randint(0, len(word_list) - 1)]).upper()
 
         # Counter variables for keeping track of letters entered
         self.current_line   = 0
@@ -100,6 +100,7 @@ class Game:
             word += self.game_matrix[self.current_line][i].get_text()
 
         if word not in self.word_list:
+            print('word not found error')
             return NOT_FOUND
         
         # Update the state of boxes

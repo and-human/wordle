@@ -16,6 +16,7 @@ def main():
     # Main Game
     words_list = open(WORDS_LIST).read()
     words_list = words_list.split('\n')
+    words_list = [word.upper() for word in words_list]
     game = Game(screen, WORD_LENGTH, words_list)
 
     # Game Loop
