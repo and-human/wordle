@@ -21,24 +21,44 @@ class Box:
         self.rect = pg.Rect(pos[0], pos[1], size, size)
 
         self.state = state
-
         self.box_text = ''
 
     def set_state(self, state, screen):
+        """
+        Set the state of the box
+        """
         self.state = state
         self.draw(screen)
 
+    def set_text(self, text, screen):
+        """
+        Set the letter in the box
+        """
+        self.box_text = text
+        self.draw(screen)
+
+    def delete_text(self, screen):
+        """
+        Delete the letter in the box
+        """
+        self.box_text = ''
+        self.draw(screen)
+
     def draw(self, screen):
+        """
+        Draw the box on the screen
+        """
+        # Creating the empty box by deleting if anything before
         pg.draw.rect(screen, EMPTY_BOX_COLOR, self.rect, width=0)
 
-        #creating borders for the box
+        # Creating borders for the box
         border_width = floor(self.size*0.05) if self.state == EMPTY else 0
 
-        #coloring the box and font
+        # Coloring the box and font
         font_color = EMPTY_BOX_FONT_COLOR if self.state == EMPTY else TEXT_COLOR
         box_color = Colors.get(self.state)
 
-        # drawing the box and placing the text in the center
+        # Drawing the box and placing the text in the center
         pg.draw.rect(screen, box_color, self.rect, width=border_width)
         text_surface = letter_font.render(self.box_text, True, font_color)
         text_rect = text_surface.get_rect(center = self.rect.center)
