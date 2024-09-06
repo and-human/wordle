@@ -2,9 +2,9 @@ import random
 import pygame as pg
 import os
 from .constants import *
-from .gridLine import GridLine
+from .updatesWindow import UpdatesWindow
 from .box import Box
-from .game_states import *
+from .gameStates import *
 
 
 class Game:
@@ -41,6 +41,9 @@ class Game:
             self.current_letter -= 1
             self.game_matrix[self.current_line][self.current_letter].delete_text(self.screen)
 
+    def get_state(self):
+        return self.game_state
+
     def enter_word(self):
         """
         Enter the word in the box
@@ -51,9 +54,6 @@ class Game:
             # Checking the result of the word
             if word_result == SUCCESS:
                 self.game_state = WinState()
-
-            elif word_result == INCORRECT:
-                self.game_state = LoseState()
 
             elif word_result == NOT_FOUND:
                 self.game_state = WordNotFound()
@@ -75,7 +75,7 @@ class Game:
 
             # Creating boxes for each letter in a row
             for j in range(self.word_length):
-                pos = (WIDTH * 0.34) + ROW_GUTTER + (j * ROW_GUTTER + j * BOX_SIZE), (HEIGHT * 0.1) + (i * ROW_GUTTER + i * BOX_SIZE)
+                pos = (WIDTH * 0.40) + ROW_GUTTER + (j * ROW_GUTTER + j * BOX_SIZE), (HEIGHT * 0.1) + (i * ROW_GUTTER + i * BOX_SIZE)
 
                 # Creating an empty box for the letter
                 unit_box = Box(pos, BOX_SIZE, 0)
@@ -83,12 +83,40 @@ class Game:
                 row.append(unit_box)
 
             self.game_matrix.append(row)
+
+        #TODO: Create the keyboard view
+
+        pos = (WIDTH * 0.1, HEIGHT * 0.1)
+        window = UpdatesWindow(pos, WINDOW_WIDTH, WINDOW_HEIGHT, BG_COLOR, self.game_state.text) 
+
+        window.draw(self.screen)
     
     def _validate_word(self):
         """
         Validate the word entered by the user
         """
-        pass
+        word = ''
+        for i in range(self.word_length):
+            word += self.game_matrix[self.current_line][i].get_text()
+
+        if word not in self.word_list:
+            return NOT_FOUND
+        
+        # Update the state of boxes
+        for i in range(self.word_length):
+            letter = self.game_matrix[self.current_line][i].get_text()
+
+            if letter == self.target_word[i]:
+                box_state = SUCCESS
+            elif letter in self.target_word:
+                box_state = PARTIAL
+            else:
+                box_state = INCORRECT
+
+            self.game_matrix[self.current_line][i].set_state(box_state, self.screen)
+
+        return SUCCESS if word == self.target_word else INCORRECT
+
             
 
 if __name__ == "__main__":

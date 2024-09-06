@@ -37,6 +37,12 @@ class Box:
         self.box_text = text
         self.draw(screen)
 
+    def get_text(self):
+        """
+        Get the letter in the box
+        """
+        return self.box_text
+
     def delete_text(self, screen):
         """
         Delete the letter in the box
