@@ -14,7 +14,10 @@ def main():
     screen.fill(BG_COLOR)
     pg.display.flip()
 
-    # Loading Buttons
+    # Game name on top of the window
+    font = pg.font.Font(GAME_FONT, 200)
+    text = font.render(GAME_TITLE, True, SUCCESS_BG_COLOR)
+    screen.blit(text, (WIDTH * 0.31, HEIGHT * 0.05))
 
     # Clear Grid Button
     clear_button = ClearWindow(int(WIDTH * 0.8), int(HEIGHT * 0.3), BUTTON_WIDTH, BUTTON_HEIGHT, "Clear Grid", BUTTON_COLOR, 24)

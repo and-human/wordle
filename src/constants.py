@@ -1,11 +1,11 @@
 #Colours
-BG_COLOR                = 34, 36, 34        #Black
-TEXT_COLOR              = 255, 255, 255           #White
-EMPTY_BOX_COLOR         = 128, 128, 128     #Grey
-SUCCESS_BOX_COLOR       = 0, 128, 0         #Green
-INCORRECT_BOX_COLOR     = 128, 128, 128     #Grey
-PARTIAL_BOX_COLOR       = 255, 255, 0       #Yellow
-EMPTY_BOX_FONT_COLOR    = 255, 255, 255           #Black
+BG_COLOR                = 34, 36, 34        
+TEXT_COLOR              = 255, 255, 255    
+EMPTY_BOX_COLOR         = 128, 128, 128     
+SUCCESS_BOX_COLOR       = 0, 128, 0         
+INCORRECT_BOX_COLOR     = 59, 59, 59    
+PARTIAL_BOX_COLOR       = 232, 163, 23       
+EMPTY_BOX_FONT_COLOR    = 255, 255, 255    
 SUCCESS_BG_COLOR        = 0, 128, 0
 INCORRECT_BG_COLOR      = 128, 0, 0
 
@@ -26,12 +26,14 @@ TITLE = "Wordle"
 FONT = "Arial"
 BOX_FONT_SIZE = 35
 WINDOW_FONT_SIZE = 24
+GAME_FONT = "fonts/Pixeboy.ttf"
+GAME_TITLE = "WORDLE"
 
 
 #MISC
 ATTEMPTS = 6
 WORD_LENGTH = 5
-WORDS_LIST = 'words/test_bank.txt'
+WORDS_LIST = 'words/word_bank_5.txt'
 
 
 #Box States
@@ -41,3 +43,9 @@ PARTIAL = 2
 SUCCESS = 3
 NOT_FOUND = 4
 
+
+#Buttons
+BUTTON_HEIGHT = 50  
+BUTTON_WIDTH = 200
+BUTTON_COLOR = 128, 128, 128
+BUTTON_FONT_SIZE = 30
