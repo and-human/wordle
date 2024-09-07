@@ -15,7 +15,7 @@ class PlayState(GameState):
     """
     def __init__(self):
         super().__init__()
-        self.text = "Wordle"
+        self.text = ""
         self.background_color = BG_COLOR
         self.finished = False
 
