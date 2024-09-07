@@ -7,35 +7,6 @@ from .box import Box
 from .gameStates import *
 from .searchMethods import *
 
-# Map letters to colors
-letter_states = {
-    'A': 0,
-    'B': 0,
-    'C': 0,
-    'D': 0,
-    'E': 0,
-    'F': 0,
-    'G': 0,
-    'H': 0,
-    'I': 0,
-    'J': 0,
-    'K': 0,
-    'L': 0,
-    'M': 0,
-    'N': 0,
-    'O': 0,
-    'P': 0,
-    'Q': 0,
-    'R': 0,
-    'S': 0,
-    'T': 0,
-    'U': 0,
-    'V': 0,
-    'W': 0,
-    'X': 0,
-    'Y': 0,
-    'Z': 0
-}
 
 class Game:
     def __init__(self, screen, word_length: int, word_list: list):
@@ -45,6 +16,7 @@ class Game:
         self.game_state = PlayState()
 
         self.game_matrix = []
+        self.keyboard_matrix = {}
         self.target_word = (word_list[random.randint(0, len(word_list) - 1)]).upper()
 
         print(self.target_word)
@@ -94,7 +66,6 @@ class Game:
 
             # Checking the result of the word
             if word_result == SUCCESS:
-                print(letter_states)
                 self.game_state = WinState()
 
             elif word_result == NOT_FOUND:
@@ -149,11 +120,22 @@ class Game:
 
             self.game_matrix.append(row)
 
-        #TODO: Create the keyboard view
+        # Create the keyboard view
+        
+        keyboard = [["QWERTYUIOP"], ["ASDFGHJKL"], ["ZXCVBNM"]]
+        keyboard_positions = [(0.32, 0.5), (0.34, 0.58), (0.38, 0.66)]
+        for i, row_keys in enumerate(keyboard):
 
-        #TODO: Add the button for DFS Solver
+            for j, key in enumerate(row_keys[0]):
+                pos = (
+                    (WIDTH * keyboard_positions[i][0]) + ROW_GUTTER + (j * ROW_GUTTER + j * BOX_SIZE), 
+                    (HEIGHT * keyboard_positions[i][1])
+                )
 
-        #TODO: Add the button for resetting the game
+                unit_box = Box(pos, BOX_SIZE, 0)
+                unit_box.draw(self.screen)
+                unit_box.set_text(key, self.screen)
+                self.keyboard_matrix[key] = unit_box
 
         pos = (WIDTH * 0.1, HEIGHT * 0.1)
         window = UpdatesWindow(pos, WINDOW_WIDTH, WINDOW_HEIGHT, BG_COLOR, self.game_state.text) 
@@ -177,15 +159,13 @@ class Game:
 
             if letter == self.target_word[i]:
                 box_state = SUCCESS
-                letter_states[letter] = 3
             elif letter in self.target_word:
                 box_state = PARTIAL
-                letter_states[letter] = 2
             else:
                 box_state = INCORRECT
-                letter_states[letter] = 1
 
             self.game_matrix[self.current_line][i].set_state(box_state, self.screen)
+            self.keyboard_matrix[letter].set_state(box_state, self.screen)
 
         return SUCCESS if word == self.target_word else INCORRECT
 
