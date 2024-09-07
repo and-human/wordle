@@ -111,7 +111,7 @@ class Game:
 
             # Creating boxes for each letter in a row
             for j in range(self.word_length):
-                pos = (WIDTH * 0.40) + ROW_GUTTER + (j * ROW_GUTTER + j * BOX_SIZE), (HEIGHT * 0.1) + (i * ROW_GUTTER + i * BOX_SIZE)
+                pos = (WIDTH * 0.40) + ROW_GUTTER + (j * ROW_GUTTER + j * BOX_SIZE), (HEIGHT * 0.22) + (i * ROW_GUTTER + i * BOX_SIZE)
 
                 # Creating an empty box for the letter
                 unit_box = Box(pos, BOX_SIZE, 0)
@@ -123,7 +123,7 @@ class Game:
         # Create the keyboard view
         
         keyboard = [["QWERTYUIOP"], ["ASDFGHJKL"], ["ZXCVBNM"]]
-        keyboard_positions = [(0.32, 0.5), (0.34, 0.58), (0.38, 0.66)]
+        keyboard_positions = [(0.32, 0.60), (0.34, 0.67), (0.38, 0.74)]
         for i, row_keys in enumerate(keyboard):
 
             for j, key in enumerate(row_keys[0]):
