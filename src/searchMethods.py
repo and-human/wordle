@@ -1,7 +1,6 @@
 from .constants import *
 import pygame as pg
 from .gameStates import *
-from .game import Game
 
 class DFS:
     def __init__(self, game):
@@ -19,6 +18,7 @@ class DFS:
         """
         print("Starting DFS search...")
         self._dfs_search([])
+        print("DFS search complete.")
 
     def _dfs_search(self, path):
         """
