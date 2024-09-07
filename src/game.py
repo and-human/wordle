@@ -6,6 +6,35 @@ from .updatesWindow import UpdatesWindow
 from .box import Box
 from .gameStates import *
 
+# Map letters to colors
+letter_states = {
+    'A': 0,
+    'B': 0,
+    'C': 0,
+    'D': 0,
+    'E': 0,
+    'F': 0,
+    'G': 0,
+    'H': 0,
+    'I': 0,
+    'J': 0,
+    'K': 0,
+    'L': 0,
+    'M': 0,
+    'N': 0,
+    'O': 0,
+    'P': 0,
+    'Q': 0,
+    'R': 0,
+    'S': 0,
+    'T': 0,
+    'U': 0,
+    'V': 0,
+    'W': 0,
+    'X': 0,
+    'Y': 0,
+    'Z': 0
+}
 
 class Game:
     def __init__(self, screen, word_length: int, word_list: list):
@@ -16,6 +45,8 @@ class Game:
 
         self.game_matrix = []
         self.target_word = (word_list[random.randint(0, len(word_list) - 1)]).upper()
+
+        print(self.target_word)
 
         # Counter variables for keeping track of letters entered
         self.current_line   = 0
@@ -42,7 +73,16 @@ class Game:
             self.game_matrix[self.current_line][self.current_letter].delete_text(self.screen)
 
     def get_state(self):
+        """
+        Return the current state of the game
+        """
         return self.game_state
+    
+    def set_state(self, state):
+        """
+        Set the state of the game
+        """
+        self.game_state = state
 
     def enter_word(self):
         """
@@ -53,6 +93,7 @@ class Game:
 
             # Checking the result of the word
             if word_result == SUCCESS:
+                print(letter_states)
                 self.game_state = WinState()
 
             elif word_result == NOT_FOUND:
@@ -100,7 +141,6 @@ class Game:
             word += self.game_matrix[self.current_line][i].get_text()
 
         if word not in self.word_list:
-            print('word not found error')
             return NOT_FOUND
         
         # Update the state of boxes
@@ -109,10 +149,13 @@ class Game:
 
             if letter == self.target_word[i]:
                 box_state = SUCCESS
+                letter_states[letter] = 3
             elif letter in self.target_word:
                 box_state = PARTIAL
+                letter_states[letter] = 2
             else:
                 box_state = INCORRECT
+                letter_states[letter] = 1
 
             self.game_matrix[self.current_line][i].set_state(box_state, self.screen)
 
