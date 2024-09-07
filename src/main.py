@@ -41,6 +41,10 @@ def main():
 
             # Key Pressed
             if not game.game_state.finished:
+
+                #TODO: Block key presses that have already been guessed
+                #TODO: Cannot type after using DFS Solver
+
                 if event.type == pg.KEYDOWN and 97 <= event.key <= 122:         # a-z
                     game.write_letter(chr(event.key))
 
@@ -57,7 +61,6 @@ def main():
                     game.solve("DFS")
 
                 if clear_button.get_rect().collidepoint(pos):
-                    print("Button Pressed")
                     game.clear()
 
             # Quitting the game

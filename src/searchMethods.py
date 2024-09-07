@@ -38,11 +38,6 @@ class DFS:
             if self.solution_found:
                 break  
 
-            #TODO: The last row gets filled with the colors but not the letters
-            if self.num_guesses > ATTEMPTS:
-                print("Exceeded maximum number of guesses.", self.num_guesses)
-                self.solution_found = True
-                break
 
             if word not in self.visited:
                 self.visited.add(word)
@@ -51,6 +46,11 @@ class DFS:
 
                 # Simulate making the guess
                 self._make_guess(word)
+
+                if self.num_guesses > ATTEMPTS - 1: 
+                    print("Exceeded maximum number of guesses.", self.num_guesses)
+                    self.solution_found = True
+                    break
 
                 # Process feedback from the guess
                 self._process_feedback(word)
@@ -77,12 +77,13 @@ class DFS:
         """
         print(f"Inputting word: {word}")
         for letter in word:
+            pg.time.delay(50)
             self.game.write_letter(letter)
-            pg.display.update()
+            pg.display.flip()
             print(f"Typed letter: {letter}")
 
         self.game.enter_word() 
-        pg.display.update()
+        pg.display.flip()
         print(f"Entered word: {word}")
 
     def _process_feedback(self, word: str) -> None:
@@ -165,24 +166,3 @@ class DFS:
 
         pg.display.update() 
         print("Game state restored.")
-
-
-# Example usage of the DFSWordleSolver class
-if __name__ == "__main__":
-    pg.init()
-    screen = pg.display.set_mode((WIDTH, HEIGHT))
-    words_list = open(WORDS_LIST).read()
-    words_list = words_list.split('\n')
-    words_list = [word.upper() for word in words_list]
-    game = Game(screen, WORD_LENGTH, words_list)
-    pg.display.update()
-
-    solver = DFS(game)
-    solver.solve()
-
-    running = True
-    while running:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                running = False
-        pg.display.update()
