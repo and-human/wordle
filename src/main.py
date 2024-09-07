@@ -26,7 +26,7 @@ def main():
     while running:
         for event in pg.event.get():
 
-            # # Key Pressed
+            # Key Pressed
             if not game.game_state.finished:
                 if event.type == pg.KEYDOWN and 97 <= event.key <= 122:         # a-z
                     game.write_letter(chr(event.key))
