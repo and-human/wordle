@@ -5,6 +5,7 @@ from .constants import *
 from .updatesWindow import UpdatesWindow
 from .box import Box
 from .gameStates import *
+from .searchMethods import *
 
 # Map letters to colors
 letter_states = {
@@ -107,6 +108,29 @@ class Game:
                 self.current_line += 1
                 self.current_letter = 0
 
+    def solve(self, method: str):
+        """
+        Solve the game using the specified method
+        """
+        if method == 'DFS':
+            dfs = DFS(self)
+            dfs.solve()
+
+    def clear(self):
+        """
+        Clear the game
+        """
+        self.game_matrix = []
+        self.target_word = (self.word_list[random.randint(0, len(self.word_list) - 1)]).upper()
+
+        # Counter variables for keeping track of letters entered
+        self.current_line   = 0
+        self.current_letter = 0
+
+        # Creating the text boxes for the game
+        self._create_text_boxes()
+
+
     def _create_text_boxes(self):
         """
         Create the text boxes for the game
@@ -126,6 +150,10 @@ class Game:
             self.game_matrix.append(row)
 
         #TODO: Create the keyboard view
+
+        #TODO: Add the button for DFS Solver
+
+        #TODO: Add the button for resetting the game
 
         pos = (WIDTH * 0.1, HEIGHT * 0.1)
         window = UpdatesWindow(pos, WINDOW_WIDTH, WINDOW_HEIGHT, BG_COLOR, self.game_state.text) 

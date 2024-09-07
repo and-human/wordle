@@ -2,6 +2,7 @@ import pygame as pg
 import os
 from .constants import *
 from .game import Game
+from .buttons import *
 
 
 def main():
@@ -12,6 +13,14 @@ def main():
     pg.display.set_caption(TITLE)
     screen.fill(BG_COLOR)
     pg.display.flip()
+
+    # Loading Buttons
+
+    # Clear Grid Button
+    clear_button = ClearWindow(int(WIDTH * 0.8), int(HEIGHT * 0.3), BUTTON_WIDTH, BUTTON_HEIGHT, "Clear Grid", BUTTON_COLOR, 24)
+
+    # DFS Solver Button
+    dfs_button = DFSButton(int(WIDTH * 0.8), int(HEIGHT * 0.5), BUTTON_WIDTH, BUTTON_HEIGHT, "DFS Solver", BUTTON_COLOR, 24)
 
     # Main Game
     words_list = open(WORDS_LIST).read()
@@ -24,6 +33,10 @@ def main():
     pg.event.clear()
 
     while running:
+
+        clear_button.draw(screen)
+        dfs_button.draw(screen)
+
         for event in pg.event.get():
 
             # Key Pressed
@@ -36,6 +49,16 @@ def main():
 
                 if event.type == pg.KEYDOWN and event.key == pg.K_RETURN:       # Enter
                     game.enter_word()
+
+            if event.type == pg.MOUSEBUTTONUP:
+                pos = pg.mouse.get_pos()
+
+                if dfs_button.get_rect().collidepoint(pos):
+                    game.solve("DFS")
+
+                if clear_button.get_rect().collidepoint(pos):
+                    print("Button Pressed")
+                    game.clear()
 
             # Quitting the game
             if event.type == pg.QUIT or event.type == pg.K_ESCAPE:
