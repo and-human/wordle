@@ -17,7 +17,8 @@ class Game:
 
         self.game_matrix = []
         self.keyboard_matrix = {}
-        self.target_word = (word_list[random.randint(0, len(word_list) - 1)]).upper()
+        # self.target_word = (word_list[random.randint(0, len(word_list) - 1)]).upper()
+        self.target_word = "TITHE"
 
         print(self.target_word)
 
@@ -89,13 +90,18 @@ class Game:
         elif method == 'BFS':
             bfs = BFS(self)
             bfs.solve()
+        elif method == 'BestFS':
+            bestfs = BestFS(self)
+            bestfs.solve()
+        else:
+            raise ValueError("Invalid method specified")
 
     def clear(self):
         """
         Clear the game
         """
         self.game_matrix = []
-        self.target_word = (self.word_list[random.randint(0, len(self.word_list) - 1)]).upper()
+        # self.target_word = (self.word_list[random.randint(0, len(self.word_list) - 1)]).upper()
 
         # Counter variables for keeping track of letters entered
         self.current_line   = 0
