@@ -5,12 +5,13 @@ from .gameStates import *
 class DFS:
     def __init__(self, game):
         self.game = game
-        self.visited = set()   # Track guessed words to avoid repeating guesses
+        self.visited = set()  # Track guessed words to avoid repeating guesses
         self.solution_found = False
-        self.correct_positions = [''] * game.word_length  # Correct letters in the exact positions
-        self.partial_letters = set()  # Letters that are in the word but not in the correct positions
-        self.incorrect_letters = set()  # Letters that are not in the word
-        self.num_guesses = 0 # Number of guesses made so far
+        self.correct_positions = [''] * game.word_length  # Correct letters in exact positions (green)
+        self.partial_letters = {}  # Tracks yellow letters and their explored positions
+        self.incorrect_letters = set()  # Letters that are not in the word (black)
+        self.num_guesses = 0  # Number of guesses made so far
+        self.letter_count = {}  # Counts letters in the target word once it is identified
 
     def solve(self):
         """
@@ -30,14 +31,13 @@ class DFS:
         # Save the current state for backtracking
         saved_state = self._save_game_state()
 
-        # Filter the word list based on known constraints
+        # Filter the word list based on known constraints using improved logic
         filtered_words = self._filter_words()
 
         # Iterate over all possible words in the filtered list
         for word in filtered_words:
             if self.solution_found:
-                break  
-
+                break
 
             if word not in self.visited:
                 self.visited.add(word)
@@ -70,7 +70,6 @@ class DFS:
                 if not self.solution_found:
                     self._restore_game_state(saved_state)
 
-
     def _make_guess(self, word: str) -> None:
         """
         Simulates typing and entering a word in the game.
@@ -97,38 +96,44 @@ class DFS:
 
             if box_state == SUCCESS:
                 self.correct_positions[i] = letter
+                self.letter_count[letter] = self.letter_count.get(letter, 0) + 1
             elif box_state == PARTIAL:
-                self.partial_letters.add(letter)
+                if letter not in self.partial_letters:
+                    self.partial_letters[letter] = []
+                self.partial_letters[letter].append(i)
             elif box_state == INCORRECT:
                 self.incorrect_letters.add(letter)
 
-        # print(f"Correct positions: {self.correct_positions}")
-        # print(f"Partial letters: {self.partial_letters}")
-        # print(f"Incorrect letters: {self.incorrect_letters}")
+        print(f"Correct positions: {self.correct_positions}")
+        print(f"Partial letters: {self.partial_letters}")
+        print(f"Incorrect letters: {self.incorrect_letters}")
 
     def _filter_words(self) -> list:
         """
-        Filters the list of possible words based on feedback constraints.
+        Filters the list of possible words based on feedback constraints using the improved filtering logic.
         """
         filtered = []
         for word in self.game.word_list:
             if self._matches_constraints(word):
                 filtered.append(word)
-        # print(f"Filtered words: {filtered}")
+        print(f"Filtered words: {len(filtered)}")
         return filtered
 
     def _matches_constraints(self, word: str) -> bool:
         """
-        Checks if a word matches the current constraints.
+        Checks if a word matches the current constraints based on updated logic.
         """
-        # Check correct positions
+        # Check correct positions (green constraints)
         for i, letter in enumerate(word):
             if self.correct_positions[i] and self.correct_positions[i] != letter:
                 return False
-        # Check partial letters
-        if not all(letter in word for letter in self.partial_letters):
-            return False
-        # Check incorrect letters
+        
+        # Check yellow letters
+        for letter, positions in self.partial_letters.items():
+            if letter not in word or any(word[i] == letter for i in positions):
+                return False
+        
+        # Check incorrect letters (black constraints)
         if any(letter in word for letter in self.incorrect_letters):
             return False
 
