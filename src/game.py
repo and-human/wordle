@@ -86,6 +86,9 @@ class Game:
         if method == 'DFS':
             dfs = DFS(self)
             dfs.solve()
+        elif method == 'BFS':
+            bfs = BFS(self)
+            bfs.solve()
 
     def clear(self):
         """

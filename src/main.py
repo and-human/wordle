@@ -23,7 +23,10 @@ def main():
     clear_button = ClearWindow(int(WIDTH * 0.8), int(HEIGHT * 0.3), BUTTON_WIDTH, BUTTON_HEIGHT, "Clear Grid", BUTTON_COLOR, 24)
 
     # DFS Solver Button
-    dfs_button = DFSButton(int(WIDTH * 0.8), int(HEIGHT * 0.5), BUTTON_WIDTH, BUTTON_HEIGHT, "DFS Solver", BUTTON_COLOR, 24)
+    dfs_button = DFSButton(int(WIDTH * 0.8), int(HEIGHT * 0.4), BUTTON_WIDTH, BUTTON_HEIGHT, "DFS Solver", BUTTON_COLOR, 24)
+
+    # BFS Solver Button
+    bfs_button = BFSButton(int(WIDTH * 0.8), int(HEIGHT * 0.5), BUTTON_WIDTH, BUTTON_HEIGHT, "BFS Solver", BUTTON_COLOR, 24)
 
     # Main Game
     words_list = open(WORDS_LIST).read()
@@ -39,6 +42,7 @@ def main():
 
         clear_button.draw(screen)
         dfs_button.draw(screen)
+        bfs_button.draw(screen)
 
         for event in pg.event.get():
 
@@ -62,6 +66,10 @@ def main():
 
                 if dfs_button.get_rect().collidepoint(pos):
                     game.solve("DFS")
+
+                if bfs_button.get_rect().collidepoint(pos):
+                    print("BFS")
+                    game.solve("BFS")
 
                 if clear_button.get_rect().collidepoint(pos):
                     game.clear()
