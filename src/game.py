@@ -108,6 +108,7 @@ class Game:
         self.current_letter = 0
 
         # Creating the text boxes for the game
+        self.game_state = PlayState()
         self._create_text_boxes()
 
 
