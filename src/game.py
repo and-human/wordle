@@ -159,13 +159,21 @@ class Game:
 
             if letter == self.target_word[i]:
                 box_state = SUCCESS
+                letter_state = SUCCESS
             elif letter in self.target_word:
                 box_state = PARTIAL
+                letter_state = PARTIAL
             else:
                 box_state = INCORRECT
+                letter_state = INCORRECT
+            
+            if letter == self.target_word[i] and self.target_word.count(letter) > 1:
+                box_state = SUCCESS
+                letter_state = PARTIAL
+
 
             self.game_matrix[self.current_line][i].set_state(box_state, self.screen)
-            self.keyboard_matrix[letter].set_state(box_state, self.screen)
+            self.keyboard_matrix[letter].set_state(letter_state, self.screen)
 
         return SUCCESS if word == self.target_word else INCORRECT
 
