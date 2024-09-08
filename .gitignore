@@ -1,2 +1,4 @@
 documents/
 .DS_Store
+src/__pycache__/
+venv/
