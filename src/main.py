@@ -56,6 +56,7 @@ def main():
 
                 #TODO: Block key presses that have already been guessed
                 #TODO: Cannot type after using DFS Solver
+                #TODO: Cannot handle UI for BFS
 
                 if event.type == pg.KEYDOWN and 97 <= event.key <= 122:         # a-z
                     game.write_letter(chr(event.key))
