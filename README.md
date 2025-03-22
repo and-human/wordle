@@ -1,11 +1,9 @@
-Here’s a GitHub README for your project:  
-
----
-
 # Wordle Solver using AI Search Algorithms  
 
 ## Overview  
 This project implements three search algorithms—**Depth First Search (DFS)**, **Breadth First Search (BFS)**, and **Best First Search (using entropy-based heuristic)**—to solve the Wordle game efficiently. The objective is to identify a hidden target word within a limited number of attempts using feedback from the game.  
+
+<img width="973" alt="Screenshot 2025-03-22 at 11 43 41" src="https://github.com/user-attachments/assets/659dfe91-e219-496c-a8c2-6a30b8da2f95" />
 
 ## Search Algorithms Implemented  
 ### 1. Depth First Search (DFS)  
@@ -33,29 +31,7 @@ This project implements three search algorithms—**Depth First Search (DFS)**, 
 - **Best First Search** outperforms DFS and BFS due to its heuristic-driven approach.  
 - **DFS** is significantly more efficient than BFS for this problem.  
 
-## Usage  
-1. Clone the repository:  
-   ```sh
-   git clone https://github.com/yourusername/wordle-search-ai.git
-   cd wordle-search-ai
-   ```
-2. Install dependencies (if any).  
-3. Run the solver using the desired search method:  
-   ```sh
-   python solver.py --method dfs
-   python solver.py --method bfs
-   python solver.py --method best-first
-   ```
-
 ## Future Improvements  
 - Improve the entropy heuristic for better performance.  
 - Experiment with hybrid search strategies.  
 - Optimize the implementation for larger word sets.  
-
-## Authors  
-- **Amog Rao**  
-- **Anshuman Sharma**  
-
----
-
-Would you like any modifications, such as adding installation requirements or example outputs?
